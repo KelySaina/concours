@@ -1,0 +1,25 @@
+{
+  "name": "back_concours",
+  "version": "1.0.0",
+  "description": "Back Concours",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KelySaina/concours.git"
+  },
+  "author": "KelySaina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KelySaina/concours/issues"
+  },
+  "homepage": "https://github.com/KelySaina/concours#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mysql": "^2.18.1"
+  }
+}
