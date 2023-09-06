@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const connection = require('./db');
+const nodemailer = require('nodemailer');
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.get('/', (req, res) => {
     res.send("Hello")
 })
 
-app.post("/remember", (req, res) => {
+app.post("/remember", async (req, res) => {
     const { username, password } = req.body;
 
     connection.query(
@@ -33,7 +34,7 @@ app.post("/remember", (req, res) => {
     );
 })
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
     connection.query(
@@ -50,7 +51,7 @@ app.post("/login", (req, res) => {
     );
 })
 
-app.post("/setRemember", (req, res) => {
+app.post("/setRemember", async (req, res) => {
     const { r, id } = req.body;
     let q = ""
 
@@ -68,6 +69,41 @@ app.post("/setRemember", (req, res) => {
             }
         }
     );
+})
+
+app.post("/mail", async (req, res) => {
+
+    const { recipient } = req.body
+
+
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'nalyvalisoa0510@gmail.com',
+            pass: 'ohhfmdyfitixcura',
+        },
+    });
+
+    async function sendEmail() {
+        try {
+            await transporter.sendMail({
+                from: 'nalyvalisoa0510@gmail.com',
+                to: recipient,
+                subject: 'REINITIALIZE PASSWORD',
+                text: 'Yuppie Hub',
+                html: '<p>Hello,<br>You forgot your password, please click <a href="https://google.com">here</a> to reinitialize your password<br>Yuppie Hub </p>',
+            });
+
+            res.send("Mail sent")
+        } catch (error) {
+            res.send("An error occured")
+        }
+    }
+
+    sendEmail();
+
 })
 
 app.listen(PORT, () => {
